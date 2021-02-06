@@ -1,4 +1,5 @@
-<?php 
+<?php
+    include 'inc/funciones/sesiones.php';
     include 'inc/funciones/funciones.php';
     include 'inc/templates/header.php';
 ?>
