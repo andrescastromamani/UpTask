@@ -43,7 +43,17 @@ function validarRegistro(e){
                             icon: 'success',
                             title: 'Correcto',
                             text: 'Se Creo Correctamente'
-                          })
+                        })
+                    }else if(respuesta.tipo === 'login'){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Login Correcto',
+                            text: 'Presione OK para ir al Dahsboard'
+                        })
+                        .then(resultado =>{
+                            if(resultado.value){
+                                window.location.href = 'index.php';                        }
+                        })
                     }
                 }else{
                     Swal.fire({

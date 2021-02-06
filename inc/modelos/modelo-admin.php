@@ -54,7 +54,8 @@
                 if(password_verify($password, $pass_usuario)){
                     $respuesta = array(
                         'respuesta'=>'correcto',
-                        'nombre'=>$nombre_usuario
+                        'nombre'=>$nombre_usuario,
+                        'tipo'=>$accion
                     );
                 }else{
                     $respuesta = array(
