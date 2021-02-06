@@ -40,5 +40,38 @@
     }
 
     if($accion == 'login'){
+        include '../funciones/conexion.php';
 
+        try {
+            $stmt = $conn->prepare("SELECT usuario, id, password FROM usuarios WHERE usuario = ?");
+            $stmt->bind_param('s',$usuario);
+            $stmt->execute();
+            //Loguear usuario
+            $stmt->bind_result($nombre_usuario,$id_usuario,$pass_usuario);
+            $stmt->fetch();
+            if($nombre_usuario){
+                //Verificar el password
+                if(password_verify($password, $pass_usuario)){
+                    $respuesta = array(
+                        'respuesta'=>'correcto',
+                        'nombre'=>$nombre_usuario
+                    );
+                }else{
+                    $respuesta = array(
+                        'respuesta'=>'password incorrecto'
+                    );
+                }
+            }else{
+                $respuesta = array(
+                    'error' => 'usuario no existe'
+                );
+            }
+            $stmt->close();
+            $conn->close();
+        }catch (exception $e) {
+            $respuesta = array(
+                'error' => $e->getMessage()
+            );
+        }
+        echo json_encode($respuesta);
     }
