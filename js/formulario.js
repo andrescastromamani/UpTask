@@ -33,7 +33,24 @@ function validarRegistro(e){
         //retornar los datos
         xhr.onload = function(){
             if(this.status === 200){
-                console.log(JSON.parse(xhr.responseText));
+                var respuesta = JSON.parse(xhr.responseText);
+                //si respuesta es correcta
+                if(respuesta.respuesta === 'correcto'){
+                    //si es nuevo usuario
+                    if(respuesta.tipo === 'crear'){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Correcto',
+                            text: 'Se Creo Correctamente'
+                          })
+                    }
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hubo un Error!',
+                        text: 'error'
+                      })
+                }
             }
         }
         //enviar los datos
