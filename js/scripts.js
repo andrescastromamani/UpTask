@@ -54,7 +54,7 @@ function guardarProyectoBD(nombreProyecto){
                 if(tipo === 'crear'){
                     var nuevoProyecto = document.createElement('li');
                     nuevoProyecto.innerHTML = `
-                        <a href="index.php?id_respuesta=${id}">
+                        <a href="index.php?id_proyecto=${id}">
                             ${proyecto}
                         </a>
                     `;

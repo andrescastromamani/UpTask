@@ -5,3 +5,13 @@ function obtenerPaginaActual(){
     $pagina = str_replace('.php','',$archivo);
     return $pagina;
 }
+
+function obtenerProyectos(){
+    include 'conexion.php';
+    try {
+        return $conn->query('SELECT * FROM proyectos');
+    } catch (Exception $e) {
+        echo 'error!'.$e.getMessage();
+        return false;
+    }
+}
