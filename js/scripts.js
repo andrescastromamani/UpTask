@@ -26,5 +26,27 @@ function nuevoProyecto(e){
 }
 
 function guardarProyectoBD(nombreProyecto){
-    console.log(nombreProyecto);
+    //inyectar el html
+    /*var nuevoProyecto = document.createElement('li');
+    nuevoProyecto.innerHTML = `
+        <a href="#">
+            ${nombreProyecto}
+        </a>
+    `;
+    listaProyectos.appendChild(nuevoProyecto);*/
+    //crear el llamado a AJAX
+    var xhr = new XMLHttpRequest();
+    //enviar dato por formdata
+    var datos = new FormData();
+    datos.append('proyecto',nombreProyecto);
+    datos.append('accion','crear');
+    //Abrir la conexion
+    xhr.open('POST','inc/modelos/modelo-proyecto.php',true);
+    //cargar
+    xhr.onload = function(){
+        if(this.status === 200){
+            console.log(JSON.parse(xhr.responseText));
+        }
+    }
+    xhr.send(datos);
 }
