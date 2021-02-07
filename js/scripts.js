@@ -45,7 +45,40 @@ function guardarProyectoBD(nombreProyecto){
     //cargar
     xhr.onload = function(){
         if(this.status === 200){
-            console.log(JSON.parse(xhr.responseText));
+            var respuesta = JSON.parse(xhr.responseText);
+            var proyecto = respuesta.nombre,
+                id = respuesta.id_insertado,
+                tipo = respuesta.tipo,
+                resultado = respuesta.respuesta;
+            if(resultado === 'correcto'){
+                if(tipo === 'crear'){
+                    var nuevoProyecto = document.createElement('li');
+                    nuevoProyecto.innerHTML = `
+                        <a href="index.php?id_respuesta=${id}">
+                            ${proyecto}
+                        </a>
+                    `;
+                    //agregar a la lista
+                    listaProyectos.appendChild(nuevoProyecto);
+                    //enviar alerta success
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Proyecto Creado',
+                        text: 'Proyecto '+proyecto+' creado correctamente'
+                    })
+                    .then(resultado =>{
+                        if(resultado.value){
+                            window.location.href = 'index.php?id_proyecto='+id;                        
+                        }
+                    })
+                }
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Hubo un error'
+                })
+            }
         }
     }
     xhr.send(datos);
