@@ -3,6 +3,9 @@ listaProyectos = document.querySelector('#proyectos');
 function addEventListeners(){
     //boton para crear un nuevo proyecto
     document.querySelector('.crear-proyecto a').addEventListener('click',nuevoProyecto);
+
+    //boton de una nueva tarea
+    document.querySelector('.nueva-tarea').addEventListener('click', agregarTarea);
 }
 function nuevoProyecto(e){
     e.preventDefault();
@@ -82,4 +85,19 @@ function guardarProyectoBD(nombreProyecto){
         }
     }
     xhr.send(datos);
+}
+
+//Agregar nueva tarea
+function agregarTarea(e){
+    e.preventDefault();
+    var nombreTarea = document.querySelector('.nombre-tarea').value;
+    if(nombreTarea === ''){
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Debe Llenar el Campo'
+        })
+    }else{
+
+    }
 }
