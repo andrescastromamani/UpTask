@@ -160,9 +160,20 @@ function agregarTarea(e){
 function accionesTareas(e){
     e.preventDefault();
     if(e.target.classList.contains('fa-check-circle')){
-        console.log('circle');
+        if(e.target.classList.contains('completo')){
+            e.target.classList.remove('completo');
+            cambiarEstadoTarea(e.target);
+        }else{
+            e.target.classList.add('completo');
+            cambiarEstadoTarea(e.target);
+        }
     }
     if(e.target.classList.contains('fa-trash')){
         console.log('eliminar');
     }   
+}
+
+function cambiarEstadoTarea(tarea){
+    var idTarea = tarea.parentElement.parentElement.id.split(':');
+    console.log(idTarea[1]);
 }
