@@ -98,6 +98,21 @@ function agregarTarea(e){
             text: 'Debe Llenar el Campo'
         })
     }else{
-
+        var xhr = new XMLHttpRequest();
+        //crear form data
+        var datos = new FormData();
+        datos.append('tarea',nombreTarea);
+        datos.append('tipo','crear');
+        datos.append('id_proyecto',document.querySelector('#id_proyecto').value);
+        //Abrir conexion
+        xhr.open('POST','inc/modelos/modelo-tareas.php',true);
+        //Ejecutar
+        xhr.onload = function(){
+            if(this.status === 200){
+                var respuesta = JSON.parse(xhr.responseText);
+                console.log(respuesta);
+            }
+        }
+        xhr.send(datos);
     }
 }
