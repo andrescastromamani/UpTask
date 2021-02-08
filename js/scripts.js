@@ -110,7 +110,44 @@ function agregarTarea(e){
         xhr.onload = function(){
             if(this.status === 200){
                 var respuesta = JSON.parse(xhr.responseText);
-                console.log(respuesta);
+                var resultado = respuesta.respuesta,
+                    tarea = respuesta.tarea,
+                    id_insertado = respuesta.id_insertado,
+                    tipo = respuesta.tipo;
+                if(resultado === 'correcto'){
+                    if(tipo === 'crear'){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Tarea Creada',
+                            text: 'Tarea '+tarea+' creado correctamente'
+                        })
+                        //creamos el TEMPLATE
+                        var nuevaTarea = document.createElement('li');
+                        //agregamos al ID
+                        nuevaTarea.id = 'tarea:'+id_insertado;
+                        nuevaTarea.classList.add('tarea');
+                        //construir el HTML
+                        nuevaTarea.innerHTML = `
+                            <p>${tarea}</p>
+                            <div class="acciones">
+                                <i class="far fa-check-circle"></i>
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        `;
+                        //agregarlo al HTML
+                        var listado = document.querySelector('.listado-pendientes ul');
+                        listado.appendChild(nuevaTarea);
+                        //limpiar el formulario
+                        document.querySelector('.agregar-tarea').reset();
+                    }
+                }
+                else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Hubo Un Error'
+                    })
+                }
             }
         }
         xhr.send(datos);
