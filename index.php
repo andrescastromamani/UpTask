@@ -62,6 +62,13 @@
                     ?>
                 </ul>
             </div>
+
+            <div class="avances">
+                <h2>Avance del Proyecto</h2>
+                <div class="barra-avance" id="barra-avance">
+                    <div class="porcentaje" id="porcentje"></div>
+                </div>
+            </div>
         </main>
     </div><!--.contenedor-->
 <?php 

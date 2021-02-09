@@ -1,6 +1,11 @@
 addEventListeners();
 listaProyectos = document.querySelector('#proyectos');
 function addEventListeners(){
+
+    //Document Ready
+    document.addEventListener('DOMContentLoaded',function(){
+        actualizarProgreso();
+    });
     //boton para crear un nuevo proyecto
     document.querySelector('.crear-proyecto a').addEventListener('click',nuevoProyecto);
 
@@ -149,6 +154,8 @@ function agregarTarea(e){
                         listado.appendChild(nuevaTarea);
                         //limpiar el formulario
                         document.querySelector('.agregar-tarea').reset();
+                        //actualizar progreso
+                        actualizarProgreso();
                     }
                 }
                 else{
@@ -220,6 +227,8 @@ function cambiarEstadoTarea(tarea , estado){
     xhr.onload = function(){
         if(this.status === 200){
             console.log(JSON.parse(xhr.responseText)); 
+            //actualizar progreso
+            actualizarProgreso();
         }
     }
     xhr.send(datos);
@@ -242,11 +251,34 @@ function eliminarTarea(tarea){
         if(this.status === 200){
             console.log(JSON.parse(xhr.responseText)); 
             //comprobar que existan tareas
-            var listaTareas = document.querySelectorAll('li .tarea');
+            var listaTareas = document.querySelectorAll('li.tarea');
             if(listaTareas.length === 0){
                 document.querySelector('.listado-pendientes ul').innerHTML = "<p class='lista-vacia'>No Existen Tareas asignadas</p>";
             }
+            //actualizar progreso
+            actualizarProgreso();
         }
     }
     xhr.send(datos);
+}
+
+//Actualizar progreso
+function actualizarProgreso(){
+    //Obtener todas la tareas
+    const tareas = document.querySelectorAll('li.tarea');
+    //obtener tareas completadas
+    const tareasCompletadas = document.querySelectorAll('i.completo')
+    //Porcentaje
+    const porcentaje = Math.round((tareasCompletadas.length/tareas.length)*100);
+    //Asignar el Avance
+    const avance = document.querySelector('.porcentaje');
+    avance.style.width = porcentaje+"%";
+    //mensaje al finalizar al 100%
+    if(porcentaje === 100){
+        Swal.fire({
+            icon: 'success',
+            title: 'Completo',
+            text: 'Excelente, Completaste las Tareas'
+        })
+    }
 }
