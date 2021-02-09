@@ -169,7 +169,30 @@ function accionesTareas(e){
         }
     }
     if(e.target.classList.contains('fa-trash')){
-        console.log('eliminar');
+        Swal.fire({
+            title: 'Seguro(a)?',
+            text: "No se podra revertir los cambios!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar!',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                var tareaEliminar = e.target.parentElement.parentElement;
+                //eliminar de la BD
+                eliminarTarea(tareaEliminar);
+                //eliminar del HTML
+                tareaEliminar.remove();
+
+              Swal.fire(
+                'Eliminado!',
+                'Se elimino correctamente',
+                'success'
+              )
+            }
+          })
     }   
 }
 
@@ -186,6 +209,27 @@ function cambiarEstadoTarea(tarea , estado){
     console.log(estado);
     //Abrir la conexion
     xhr.open('POST','inc/modelos/modelo-tareas-actualizar.php',true);
+    //cargar
+    xhr.onload = function(){
+        if(this.status === 200){
+            console.log(JSON.parse(xhr.responseText)); 
+        }
+    }
+    xhr.send(datos);
+}
+
+//Eliminar tarea de la BD
+function eliminarTarea(tarea){
+    var idTarea = tarea.id.split(':');
+    //console.log(idTarea[1]);
+    //crear llamado a Ajax
+    var xhr = new XMLHttpRequest();
+    //enviar dato por formdata
+    var datos = new FormData();
+    datos.append('id',idTarea[1]);
+    datos.append('accion','eliminar');
+    //Abrir la conexion
+    xhr.open('POST','inc/modelos/modelo-tareas-eliminar.php',true);
     //cargar
     xhr.onload = function(){
         if(this.status === 200){

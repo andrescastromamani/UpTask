@@ -1,14 +1,13 @@
 <?php
     $accion = $_POST['accion'];
-    $estado = $_POST['estado'];
     $id_tarea = $_POST['id'];
-    if($accion == 'actualizar'){
+    if($accion == 'eliminar'){
         
         //importar la conexion a l BD
         include '../funciones/conexion.php';
         try {
-            $stmt = $conn->prepare("UPDATE tareas set estado = ? WHERE id = ?");
-            $stmt->bind_param('ii',$estado,$id_tarea);
+            $stmt = $conn->prepare("DELETE FROM tareas WHERE id = ?");
+            $stmt->bind_param('i',$id_tarea);
             $stmt->execute();
             if($stmt->affected_rows > 0){
                 $respuesta = array(
