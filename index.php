@@ -26,7 +26,7 @@
                         <input type="text" placeholder="Nombre Tarea" class="nombre-tarea"> 
                     </div>
                     <div class="campo enviar">
-                        <input type="hidden" value="<?php echo $id_proyecto;?>" id='id_proyecto'>
+                        <input type="hidden" value="<?php echo $id_proyecto;?>" id="id_proyecto">
                         <input type="submit" class="boton nueva-tarea" value="Agregar">
                     </div>
                 </form>

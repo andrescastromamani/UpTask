@@ -44,7 +44,7 @@ function guardarProyectoBD(nombreProyecto){
     var xhr = new XMLHttpRequest();
     //enviar dato por formdata
     var datos = new FormData();
-    datos.append('proyecto',nombreProyecto);
+    datos.append('proyecto', nombreProyecto);
     datos.append('accion','crear');
     //Abrir la conexion
     xhr.open('POST','inc/modelos/modelo-proyecto.php',true);
@@ -104,7 +104,7 @@ function agregarTarea(e){
         var xhr = new XMLHttpRequest();
         //crear form data
         var datos = new FormData();
-        datos.append('tarea',nombreTarea);
+        datos.append('tarea', nombreTarea);
         datos.append('accion','crear');
         datos.append('id_proyecto',document.querySelector('#id_proyecto').value);
         //Abrir conexion
@@ -162,10 +162,10 @@ function accionesTareas(e){
     if(e.target.classList.contains('fa-check-circle')){
         if(e.target.classList.contains('completo')){
             e.target.classList.remove('completo');
-            cambiarEstadoTarea(e.target);
+            cambiarEstadoTarea(e.target, 0);
         }else{
             e.target.classList.add('completo');
-            cambiarEstadoTarea(e.target);
+            cambiarEstadoTarea(e.target, 1);
         }
     }
     if(e.target.classList.contains('fa-trash')){
@@ -173,7 +173,24 @@ function accionesTareas(e){
     }   
 }
 
-function cambiarEstadoTarea(tarea){
+function cambiarEstadoTarea(tarea , estado){
     var idTarea = tarea.parentElement.parentElement.id.split(':');
-    console.log(idTarea[1]);
+    //console.log(idTarea[1]);
+    //crear llamado a Ajax
+    var xhr = new XMLHttpRequest();
+    //enviar dato por formdata
+    var datos = new FormData();
+    datos.append('id',idTarea[1]);
+    datos.append('accion','actualizar');
+    datos.append('estado', estado);
+    console.log(estado);
+    //Abrir la conexion
+    xhr.open('POST','inc/modelos/modelo-tareas-actualizar.php',true);
+    //cargar
+    xhr.onload = function(){
+        if(this.status === 200){
+            console.log(JSON.parse(xhr.responseText)); 
+        }
+    }
+    xhr.send(datos);
 }
