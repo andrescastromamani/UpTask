@@ -47,16 +47,16 @@
                         if ($tareas->num_rows > 0) {
                             //si hay tareas
                             foreach($tareas as $tarea){?>
-                            <li id="tarea:<?php echo $tarea['id'] ?>" class="tarea">
-                            <p><?php echo $tarea['nombre']; ?></p>
-                                <div class="acciones">
-                                    <i class="far fa-check-circle <?php echo ($tarea['estado'] ==='1' ? 'completo':''); ?>" ></i>
-                                    <i class="fas fa-trash"></i>
-                                </div>
-                            </li>  
+                                <li id="tarea:<?php echo $tarea['id'] ?>" class="tarea">
+                                <p><?php echo $tarea['nombre']; ?></p>
+                                    <div class="acciones">
+                                        <i class="far fa-check-circle <?php echo ($tarea['estado'] ==='1' ? 'completo':''); ?>" ></i>
+                                        <i class="fas fa-trash"></i>
+                                    </div>
+                                </li>  
                             <?php }
                         }else{
-                            echo "<p>No hay tareas</p>";
+                            echo "<p class='lista-vacia'>No Existen Tareas asignadas</p>";
                         }
                     }
                     ?>

@@ -125,6 +125,12 @@ function agregarTarea(e){
                             title: 'Tarea Creada',
                             text: 'Tarea '+tarea+' creado correctamente'
                         })
+
+                        //seleccionar el parrafo lista vacia
+                        var parrafo = document.querySelectorAll('.lista-vacia');
+                        if(parrafo.length > 0){
+                            document.querySelector('.lista-vacia').remove();
+                        }
                         //creamos el TEMPLATE
                         var nuevaTarea = document.createElement('li');
                         //agregamos al ID
@@ -235,6 +241,11 @@ function eliminarTarea(tarea){
     xhr.onload = function(){
         if(this.status === 200){
             console.log(JSON.parse(xhr.responseText)); 
+            //comprobar que existan tareas
+            var listaTareas = document.querySelectorAll('li .tarea');
+            if(listaTareas.length === 0){
+                document.querySelector('.listado-pendientes ul').innerHTML = "<p class='lista-vacia'>No Existen Tareas asignadas</p>";
+            }
         }
     }
     xhr.send(datos);
