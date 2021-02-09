@@ -5,8 +5,9 @@ function addEventListeners(){
     document.querySelector('.crear-proyecto a').addEventListener('click',nuevoProyecto);
 
     //boton de una nueva tarea
+    if(document.querySelector('.nueva-tarea')){
     document.querySelector('.nueva-tarea').addEventListener('click', agregarTarea);
-
+    }
     //acciones para todas las tareas
     document.querySelector('.listado-pendientes').addEventListener('click',accionesTareas);
 }
